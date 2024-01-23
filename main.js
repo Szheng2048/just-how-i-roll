@@ -29,98 +29,78 @@ const sortByNumber = function(arr) {
 /*******************
  * YOUR CODE BELOW *
  *******************/
-const doublesixroll = function(num1,num2,arr,doublearr){
+const doubleSixRoll = function(num1,num2,arr){
    arr.push(num1+num2)
-   doublearr.push(num1,num2)
-   
+   document.getElementById("double-d6-roll-1").src = `./images/d6/${num1}.png`
+   document.getElementById("double-d6-roll-2").src = `./images/d6/${num2}.png`
+}
+const getmean = function(id,arr){
+  document.getElementById(id).innerHTML = `${mean(arr)}`
+}
+const getmedian = function(id,arr){
+  document.getElementById(id).innerHTML = `${median(sortByNumber((arr)))}`
+}
+const getmode = function(id,arr){
+  document.getElementById(id).innerHTML = `${mode(arr)}`
+}
+const getresults = function(id,arr){
+  getmean(id + "-mean",arr)
+  getmedian(id + "-median",arr)
+  getmode(id + "-mode",arr)
 }
 
 
 /*******************
  * EVENT LISTENERS *
  *******************/
-let sixroll = document.querySelector("#d6-roll")
-sixroll.addEventListener("click",()=>{
+
+document.querySelector("#d6-roll").addEventListener("click",()=>{
   sixes.push(getRandomNumber(6))
   document.getElementById("d6-roll").src = `./images/d6/${sixes[sixes.length-1]}.png`
-  let sixmean = mean(sixes)
-  document.querySelector("#d6-rolls-mean").innerHTML = `${sixmean}`
-  let sixmedian = median(sortByNumber(sixes))
-  document.querySelector("#d6-rolls-median").innerHTML = `${sixmedian}`
-  let sixmode = mode(sortByNumber(sixes))
-  document.querySelector("#d6-rolls-mode").innerHTML = `${sixmode}`
+  getresults("d6-rolls",sixes)
 })
 
-let d1sixroll = document.querySelector("#double-d6-roll-1")
-let d2sixroll = document.querySelector("#double-d6-roll-2")
 let dtotal = []
-let dseperate = []
-d1sixroll.addEventListener("click",()=>{
-  doublesixroll(getRandomNumber(6),getRandomNumber(6),dtotal,dseperate)
-  document.getElementById("double-d6-roll-1").src = `./images/d6/${dseperate[dseperate.length-2]}.png`
-  document.getElementById("double-d6-roll-2").src = `./images/d6/${dseperate[dseperate.length-1]}.png`
-  document.querySelector("#double-d6-rolls-mean").innerHTML = `${mean(dtotal)}`
-  document.querySelector("#double-d6-rolls-median").innerHTML = `${median(sortByNumber(dtotal))}`
-  document.querySelector("#double-d6-rolls-mode").innerHTML = `${mode(dtotal)}`
-  console.log(dseperate)
-})
-d2sixroll.addEventListener("click",()=>{
-  doublesixroll(getRandomNumber(6),getRandomNumber(6),dtotal,dseperate)
-  document.getElementById("double-d6-roll-1").src = `./images/d6/${dseperate[dseperate.length-2]}.png`
-  document.getElementById("double-d6-roll-2").src = `./images/d6/${dseperate[dseperate.length-1]}.png`
-  document.querySelector("#double-d6-rolls-mean").innerHTML = `${mean(dtotal)}`
-  document.querySelector("#double-d6-rolls-median").innerHTML = `${median(sortByNumber(dtotal))}`
-  document.querySelector("#double-d6-rolls-mode").innerHTML = `${mode(dtotal)}`
-  console.log(dseperate)
+document.querySelector("main").addEventListener("click",()=>{
+  doubleSixRoll(getRandomNumber(6),getRandomNumber(6),doubleSixes)
+  // document.getElementById("double-d6-roll-1").src = `./images/d6/${doubleSixes[doubleSixes.length-2]}.png`
+  // document.getElementById("double-d6-roll-2").src = `./images/d6/${doubleSixes[doubleSixes.length-1]}.png`
+  getresults("double-d6-rolls",doubleSixes)
 })
 
-let d12roll = document.querySelector("#d12-roll")
-d12roll.addEventListener("click",()=>{
+document.querySelector("#d12-roll").addEventListener("click",()=>{
    twelves.push(getRandomNumber(12))
    document.getElementById("d12-roll").src = `images/numbers/${twelves[twelves.length-1]}.png`
-   document.getElementById("d12-rolls-mean").innerHTML = `${mean(twelves)}`
-   document.getElementById("d12-rolls-median").innerHTML = `${median(twelves)}`
-   document.getElementById("d12-rolls-mode").innerHTML = `${mode(twelves)}`
+   getresults("d12-rolls",twelves)
 })
 
-let d20roll = document.querySelector("#d20-roll")
-d20roll.addEventListener("click",()=>{
+document.querySelector("#d20-roll").addEventListener("click",()=>{
   twenties.push(getRandomNumber(20))
   document.getElementById("d20-roll").src = `images/numbers/${twenties[twenties.length-1]}.png`
-  document.getElementById("d20-rolls-mean").innerHTML = `${mean(twenties)}`
-  document.getElementById("d20-rolls-median").innerHTML = `${median(twenties)}`
-  document.getElementById("d20-rolls-mode").innerHTML = `${mode(twenties)}`
+  getresults("d20-rolls",twenties)
 })
 
 /******************
  * RESET FUNCTION *
  ******************/
+let resetarr = [sixes,doubleSixes,twelves,twenties,dtotal]
 document.querySelector("#reset-button").addEventListener("click",()=>{
-  sixes.length = 0
-  doubleSixes.length = 0
-  twelves.length = 0
-  twenties.length = 0
-  dseperate.length = 0
-  dtotal.length = 0
+  for(let small of resetarr){
+    small.length = 0
+  }
   document.getElementById("d6-roll").src = "./images/start/d6.png"
   document.getElementById("double-d6-roll-1").src = "./images/start/d6.png"
   document.getElementById("double-d6-roll-2").src = "./images/start/d6.png"
   document.getElementById("d12-roll").src = "./images/start/d12.jpeg"
   document.getElementById("d20-roll").src = "./images/start/d20.jpg"
-  document.getElementById("d6-rolls-mean").innerHTML = ""
-  document.getElementById("d6-rolls-median").innerHTML = ""
-  document.getElementById("d6-rolls-mode").innerHTML = ""
-  document.getElementById("double-d6-rolls-mean").innerHTML = ""
-  document.getElementById("double-d6-rolls-median").innerHTML = ""
-  document.getElementById("double-d6-rolls-mode").innerHTML = ""
-  document.getElementById("d12-rolls-mean").innerHTML = ""
-  document.getElementById("d12-rolls-median").innerHTML = ""
-  document.getElementById("d12-rolls-mode").innerHTML = ""
-  document.getElementById("d20-rolls-mean").innerHTML = ""
-  document.getElementById("d20-rolls-median").innerHTML = ""
-  document.getElementById("d20-rolls-mode").innerHTML = ""
+  clearresults(resultsarr)
 })
-
+const resultsarr = ["d6-rolls-mean","d6-rolls-median","d6-rolls-mode","double-d6-rolls-mean","double-d6-rolls-median","double-d6-rolls-mode","d12-rolls-mean","d12-rolls-median","d12-rolls-mode","d20-rolls-mean","d20-rolls-median","d20-rolls-mode"]
+const clearresults = function(arr){
+  for(let id of arr){
+    document.getElementById(id).innerHTML = ""
+  }
+}
 
 /****************************
  * CLICK HANDLING FUNCTIONS *
